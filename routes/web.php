@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,15 @@ Route::view('/', 'welcome');
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+
+Route::get('stock', [StockController::class , 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('stock');
+
+Route::get('create-stock', [StockController::class , 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('create-stock');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

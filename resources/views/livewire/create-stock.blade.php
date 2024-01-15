@@ -34,29 +34,31 @@
                         </div>
                     </div>
                     @foreach($rows as $index => $row)
-               
                     <div class="mb-4" wire:key="{{$index}}">
                         <div class="flex flex-col sm:flex-row md:flex-row gap-4">
+
                             {{-- company  --}}
                             <div class="w-full">
                                 <label class="block text-sm font-medium leading-6 text-gray-900">Select Company</label>
-                                <select wire:model="rows.{{ $index }}.selectedCompany" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1"  wire:change="fetchProduct({{ $index }})" >
+                                <select wire:model="rows.{{ $index }}.selectedCompany" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1" wire:change="fetchProductByCompany({{ $index }})">
                                     <option value="">Select Company</option>
                                     @foreach($companies as $company)
                                         <option value="{{ $company->id }}">{{ $company->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
                             {{-- category  --}}
                             <div class="w-full">
                                 <label class="block text-sm font-medium leading-6 text-gray-900">Select Category</label>
-                                <select wire:model="rows.{{ $index }}.selectedCategory" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full  mt-1">
+                                <select wire:model="rows.{{ $index }}.selectedCategory" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1" wire:change="fetchRowData({{ $index }})">
                                     <option value="">Select Category</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
                             {{-- products  --}}
                             <div class="w-full">
                                 <label class="block text-sm font-medium leading-6 text-gray-900">Select Product</label>
@@ -67,26 +69,36 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             {{-- size  --}}
                             <div class="w-full">
                                 <label class="block text-sm font-medium leading-6 text-gray-900">Select Size</label>
-                                <select wire:model="rows.{{ $index }}.selectedSize" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1">
+                                <select wire:model="rows.{{ $index }}.selectedSize" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1" @if($row['disabledVariation']) disabled @endif>
                                     <option value="">Select Size</option>
-                                    @foreach($sizes as $size)
+                                    @foreach($row['sizes'] as $size)
                                         <option value="{{ $size->id }}">{{ $size->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
                             {{-- thickness  --}}
                             <div class="w-full">
                                 <label class="block text-sm font-medium leading-6 text-gray-900">Select Thickness</label>
-                                <select wire:model="rows.{{ $index }}.selectedHeight" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full  mt-1">
+                                <select wire:model="rows.{{ $index }}.selectedHeight" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1" @if($row['disabledVariation']) disabled @endif>
                                     <option value="">Select Thickness</option>
-                                    @foreach($heights as $height)
+                                    @foreach($row['heights'] as $height)
                                         <option value="{{ $height->id }}">{{ $height->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="w-full">
+                                <label class="block text-sm font-medium leading-6 text-gray-900">Qty</label>
+                                <div class="mt-2">
+                                    <x-text-input wire:model="rows.{{ $index }}.qty" class="block mt-1 w-full" type="number" min="1" required />
+                                </div>
+                            </div>
+
                             <div class="w-full flex items-end">
                                 <x-primary-button class="ms-3 mb-2 w-full justify-center" type="button" wire:click="addRow">
                                     Add

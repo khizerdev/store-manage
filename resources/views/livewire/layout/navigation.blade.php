@@ -44,6 +44,11 @@ new class extends Component
                         {{ __('Create Stock') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('products-stock')" :active="request()->routeIs('products-stock')" wire:navigate>
+                        {{ __('Products Stock') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

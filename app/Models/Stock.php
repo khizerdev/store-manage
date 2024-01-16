@@ -11,8 +11,13 @@ class Stock extends Model
 
     protected $guarded = [];
 
+    public function items()
+    {
+        return $this->hasMany(StockItem::class);
+    }
+
     public function vendor()
     {
-        return $this->hasMany(Vendor::class);
+        return $this->belongsTo(Vendor::class);
     }
 }

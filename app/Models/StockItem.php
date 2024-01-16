@@ -15,4 +15,19 @@ class StockItem extends Model
     {
         return $this->belongsTo(Stock::class);
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+
+    public function height()
+    {
+        return $this->belongsTo(Height::class);
+    }
 }

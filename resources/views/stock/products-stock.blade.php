@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Stock') }}
+            {{ __('Product Stock') }}
         </h2>
     </x-slot>
 
@@ -17,24 +17,28 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Vendor</th>
-                                <th>Challan</th>
-                                <th>Date</th>
-                                <th>Created at</th>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Thickness</th>
+                                <th>Stock In</th>
+                                <th>Stock Out</th>
+                                <th>Balance</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($stocks as $stock)    
-                                <tr>
-                                    <td>{{$stock->id}}</td>
-                                    <td>{{$stock->vendor->name}}</td>
-                                    <td>{{$stock->challan}}</td>
-                                    <td>{{$stock->date}}</td>
-                                    <td>{{$stock->created_at->format('d F Y')}}</td>
-                                    <td></td>
-                                </tr>
-                            @endforeach
+                           @foreach ($products as $product)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$product['name']}}</td>
+                                <td>{{$product['size']}}</td>
+                                <td>{{$product['height']}}</td>
+                                <td>{{$product['stock_in']}}</td>
+                                <td>0</td>
+                                <td>{{$product['stock_in']}}</td>
+                                <td>Action</td>
+                            </tr>
+                           @endforeach
                         </tbody>
                     </table>
                 </div>

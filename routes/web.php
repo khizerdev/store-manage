@@ -25,6 +25,10 @@ Route::get('stock', [StockController::class , 'index'])
     ->middleware(['auth', 'verified'])
     ->name('stock');
 
+Route::get('products-stock', [StockController::class , 'productStock'])
+    ->middleware(['auth', 'verified'])
+    ->name('products-stock');
+
 Route::get('create-stock', [StockController::class , 'create'])
     ->middleware(['auth', 'verified'])
     ->name('create-stock');

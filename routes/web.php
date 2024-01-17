@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,22 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
 
+    Route::get('stock', [StockController::class, 'index'])->name('stock');
+    Route::get('products-stock', [StockController::class, 'productStock'])->name('products-stock');
+    Route::get('create-stock', [StockController::class, 'create'])->name('create-stock');
 
-Route::get('stock', [StockController::class , 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('stock');
-
-Route::get('products-stock', [StockController::class , 'productStock'])
-    ->middleware(['auth', 'verified'])
-    ->name('products-stock');
-
-Route::get('create-stock', [StockController::class , 'create'])
-    ->middleware(['auth', 'verified'])
-    ->name('create-stock');
+    Route::get('create-sale', [SaleController::class, 'create'])->name('create-sale');
+});
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
